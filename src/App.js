@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import SearchField from './Components/SearchField';
+/*
+http://api.giphy.com/v1/gifs/search?q=SEARCH+TERM+GOES+HERE&api_key=YOUR_API_KEY
+sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ
+http://api.giphy.com/v1/gifs/search?q=cats&api_key=sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ
+*/
 
-function App() {
+
+function App() {  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>Hello</p>
+      <SearchField/>
     </div>
   );
 }
 
 export default App;
+
+
