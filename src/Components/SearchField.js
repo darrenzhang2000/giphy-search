@@ -18,7 +18,7 @@ class SearchField extends Component{
             .then((myJson) => {
                 let data = myJson;
                 console.log(data.data[0].url);
-                this.setState({testImg: data.data[0].url})
+                this.setState({testImg: data.data[0].images.original.url})
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -28,7 +28,7 @@ class SearchField extends Component{
     render(){
         return <div>
             <input type="text" placeholder="Try Cats" onChange={this.handleSearchInput}/>
-            <img src={this.state.testImg}/>
+            <img src={this.state.testImg} alt={this.state.testImg}/>
             <p>{this.state.testImg}</p>
         </div>
     }
