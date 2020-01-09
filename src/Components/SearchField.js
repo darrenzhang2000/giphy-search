@@ -4,7 +4,8 @@ class SearchField extends Component{
     constructor(props){
         super(props);
         this.state = {
-            testImg: null
+            testImg: null,
+            data: []
         }
     }
 
@@ -16,9 +17,10 @@ class SearchField extends Component{
                 return response.json();
             })
             .then((myJson) => {
-                let data = myJson;
-                console.log(data.data[0].url);
-                this.setState({testImg: data.data[0].images.original.url})
+                let data = myJson.data;
+                console.log(data);
+                // this.setState({testImg: data.data[0].images.original.url})
+                this.setState({data: data})
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -26,9 +28,17 @@ class SearchField extends Component{
     }
 
     render(){
+        var thegifs = this.state.data.map((gif, ind) => (
+                <div className="gif" key={ind}>
+                    <img src={gif.images.original.url} />
+                </div>
+            )
+        );
+
         return <div>
             <input type="text" placeholder="Try Cats" onChange={this.handleSearchInput}/>
             <img src={this.state.testImg} alt={this.state.testImg}/>
+            {thegifs}
             <p>{this.state.testImg}</p>
         </div>
     }
