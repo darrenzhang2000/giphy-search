@@ -7,9 +7,12 @@ class SearchField extends Component{
             testImg: null,
             data: []
         }
+
+        this.handleTrending()
     }
 
     handleSearchInput = () => {
+        this.setState({data:[]})
         let linkToAPI = "http://api.giphy.com/v1/gifs/search?q=" + document.getElementById("search-text").value + "&api_key=sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ";
         //console.log(linkToAPI);
         fetch(linkToAPI)
@@ -28,7 +31,7 @@ class SearchField extends Component{
     }
 
     handleTrending = () => {
-        let linkToAPI = "http://api.giphy.com/v1/gifs/trending?" + "api_key=sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ";
+        let linkToAPI = "http://api.giphy.com/v1/gifs/trending?api_key=sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ";
         //console.log(linkToAPI);
         fetch(linkToAPI)
             .then((response) => {
@@ -46,7 +49,7 @@ class SearchField extends Component{
     }
 
     handleRandom = () => {
-        let linkToAPI = "http://api.giphy.com/v1/gifs/random" + "api_key=sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ";
+        let linkToAPI = "http://api.giphy.com/v1/gifs/random?api_key=sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ";
         //console.log(linkToAPI);
         fetch(linkToAPI)
             .then((response) => {
@@ -64,6 +67,9 @@ class SearchField extends Component{
     }
 
     render(){
+
+        // this.handleTrending()
+
         var thegifs = this.state.data.map((gif, ind) => (
                 <div className="gif" key={ind}>
                     <img src={gif.images.original.url} alt="" />
@@ -71,11 +77,11 @@ class SearchField extends Component{
             )
         );
 
+        
+
         return <div>
             <input id="search-text" type="text" placeholder="Try Cats" onChange={this.handleSearchInput}/>
-            <img src={this.state.testImg} alt={this.state.testImg}/>
             {thegifs}
-            <p>{this.state.testImg}</p>
         </div>
     }
 }
