@@ -5,13 +5,15 @@ class SearchField extends Component{
         super(props);
         this.state = {
             testImg: null,
-            data: []
+            data: [],
+            randomImage: false
         }
 
         this.handleTrending()
     }
 
     handleSearchInput = () => {
+        this.setState({randomImage: false})
         this.setState({data:[]})
         let linkToAPI = "http://api.giphy.com/v1/gifs/search?q=" + document.getElementById("search-text").value + "&api_key=sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ";
         //console.log(linkToAPI);
@@ -31,6 +33,7 @@ class SearchField extends Component{
     }
 
     handleTrending = () => {
+        this.setState({randomImage: false})
         let linkToAPI = "http://api.giphy.com/v1/gifs/trending?api_key=sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ";
         //console.log(linkToAPI);
         fetch(linkToAPI)
@@ -49,6 +52,8 @@ class SearchField extends Component{
     }
 
     handleRandom = () => {
+        this.setState({randomImage: true})
+        this.setState({data:[]})
         let linkToAPI = "http://api.giphy.com/v1/gifs/random?api_key=sqPHtsBm3ol63E2X1iIJRktBKkzxe4qZ";
         //console.log(linkToAPI);
         fetch(linkToAPI)
@@ -56,8 +61,10 @@ class SearchField extends Component{
                 return response.json();
             })
             .then((myJson) => {
-                let data = myJson.data;
+                let data = [];
+                data.push(myJson.data.image_url);
                 console.log(data);
+                console.log("inside handle random");
                 // this.setState({testImg: data.data[0].images.original.url})
                 this.setState({data: data})
             })
@@ -70,16 +77,21 @@ class SearchField extends Component{
 
         // this.handleTrending()
 
-        var thegifs = this.state.data.map((gif, ind) => (
+        var thegifs;
+        if(this.state.randomImage){
+            thegifs = <img src={this.state.data}/>
+        }else{       
+            thegifs = this.state.data.map((gif, ind) => (
                 <div className="gif" key={ind}>
                     <img src={gif.images.original.url} alt="" />
                 </div>
-            )
-        );
+            ))
+        }   
 
         
 
         return <div>
+            <input id="random-gif" value="Random Gif" type="button" onClick={this.handleRandom}/>
             <input id="search-text" type="text" placeholder="Try Cats" onChange={this.handleSearchInput}/>
             {thegifs}
         </div>
